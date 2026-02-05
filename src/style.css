@@ -1,0 +1,407 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* ============================================
+   ESVELO WEBSITE STYLES
+   Clean, minimal dark aesthetic
+   ============================================ */
+
+/* Theme Configuration */
+@theme {
+  --color-esvelo-black: #000000;
+  --font-family-inter: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Base Styles */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-family-inter);
+    background: var(--color-esvelo-black);
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #fff;
+    color: #000;
+  }
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+#navbar {
+  background: transparent;
+}
+
+.nav-link {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: #fff;
+  transition: opacity 0.2s ease;
+}
+
+.nav-link:hover {
+  opacity: 0.6;
+}
+
+/* Mobile Menu */
+#menu-toggle.active .menu-line:nth-child(1) {
+  transform: rotate(45deg) translate(4px, 4px);
+}
+
+#menu-toggle.active .menu-line:nth-child(2) {
+  opacity: 0;
+}
+
+#menu-toggle.active .menu-line:nth-child(3) {
+  width: 1.5rem;
+  transform: rotate(-45deg) translate(4px, -4px);
+}
+
+.mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  background: #000;
+  transition: max-height 0.4s ease;
+}
+
+.mobile-menu.open {
+  max-height: 300px;
+}
+
+.mobile-nav-link {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #fff;
+  padding: 0.5rem 0;
+  transition: opacity 0.2s ease;
+}
+
+.mobile-nav-link:hover {
+  opacity: 0.6;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+#hero {
+  background: #000;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 80px;
+}
+
+.hero-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .hero-container {
+    padding: 0 3rem;
+  }
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+
+.hero-description {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 580px;
+  margin-bottom: 2rem;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.75rem;
+  background: transparent;
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+.section-padding {
+  padding: 100px 0;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 60px 0;
+  }
+}
+
+/* ============================================
+   STORY SECTION
+   ============================================ */
+.story-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.story-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ============================================
+   ACCELERATOR SECTION
+   ============================================ */
+.accelerator-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.accelerator-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Service Cards */
+.service-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1.5rem;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.service-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.card-number {
+  font-size: 1.125rem;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.card-icon {
+  width: 28px;
+  height: 28px;
+  stroke: rgba(255, 255, 255, 0.5);
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+/* ============================================
+   TEAM SECTION
+   ============================================ */
+.team-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-align: center;
+}
+
+.team-member {
+  text-align: left;
+}
+
+.team-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 320px;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.team-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  filter: grayscale(100%);
+}
+
+.linkedin-badge {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.linkedin-badge:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.member-name {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.member-role {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1.5rem;
+}
+
+.member-bio {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================
+   FIXED SOCIAL LINKS
+   ============================================ */
+.fixed-social {
+  position: fixed;
+  bottom: 2rem;
+  left: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  z-index: 40;
+}
+
+.fixed-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.2s ease;
+}
+
+.fixed-social a:hover {
+  color: #fff;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+  background: #000;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 1024px) {
+  .team-photo {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-description {
+    font-size: 0.9375rem;
+  }
+
+  .fixed-social {
+    bottom: 1.5rem;
+    left: 1rem;
+  }
+
+  .team-photo {
+    max-width: 100%;
+  }
+
+  .member-name {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .accelerator-title,
+  .team-title {
+    font-size: 2rem;
+  }
+
+  .story-title {
+    font-size: 1.5rem;
+  }
+}
