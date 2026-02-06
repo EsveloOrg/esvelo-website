@@ -6,10 +6,25 @@
    Clean, minimal dark aesthetic
    ============================================ */
 
+/* ============================================
+   ASCII BACKGROUND CANVAS
+   ============================================ */
+#ascii-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: #000;
+}
+
 /* Theme Configuration */
 @theme {
   --color-esvelo-black: #000000;
   --font-family-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
 }
 
 /* Base Styles */
@@ -24,7 +39,7 @@
 
   body {
     font-family: var(--font-family-inter);
-    background: var(--color-esvelo-black);
+    background: transparent;
     color: #fff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -38,10 +53,23 @@
 }
 
 /* ============================================
+   MAIN CONTENT WRAPPER
+   Ensures content appears above ASCII canvas
+   ============================================ */
+nav,
+section,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
    NAVIGATION
    ============================================ */
 #navbar {
   background: transparent;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 .nav-link {
@@ -97,7 +125,7 @@
    HERO SECTION
    ============================================ */
 #hero {
-  background: #000;
+  background: transparent;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -118,9 +146,10 @@
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  font-weight: 700;
-  line-height: 1;
+  font-family: var(--font-family-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 300;
+  line-height: 1.1;
   letter-spacing: -0.02em;
   color: #fff;
   margin-bottom: 0.75rem;
@@ -151,6 +180,8 @@
   justify-content: center;
   padding: 0.875rem 1.75rem;
   background: transparent;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   color: #fff;
   font-size: 0.9375rem;
   font-weight: 400;
@@ -162,7 +193,7 @@
 
 .btn-outline:hover {
   border-color: #fff;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 /* ============================================
@@ -182,8 +213,9 @@
    STORY SECTION
    ============================================ */
 .story-title {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 700;
+  font-family: var(--font-family-display);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 300;
   letter-spacing: -0.01em;
   color: #fff;
 }
@@ -198,9 +230,10 @@
    ACCELERATOR SECTION
    ============================================ */
 .accelerator-title {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: var(--font-family-display);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
   color: #fff;
   margin-bottom: 1rem;
 }
@@ -212,7 +245,9 @@
 
 /* Service Cards */
 .service-card {
-  background: rgba(255, 255, 255, 0.02);
+  background: transparent;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 1.5rem;
@@ -225,7 +260,7 @@
 
 .service-card:hover {
   border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
@@ -258,9 +293,10 @@
    TEAM SECTION
    ============================================ */
 .team-title {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: var(--font-family-display);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
   color: #fff;
   text-align: center;
 }
@@ -356,7 +392,9 @@
    FOOTER
    ============================================ */
 footer {
-  background: #000;
+  background: transparent;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 /* ============================================
@@ -370,7 +408,7 @@ footer {
 
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
   }
 
   .hero-description {
@@ -398,7 +436,7 @@ footer {
 
   .accelerator-title,
   .team-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 
   .story-title {

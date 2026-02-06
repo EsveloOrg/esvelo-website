@@ -18,11 +18,14 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
+  <!-- ASCII Background Canvas -->
+  <canvas id="ascii-canvas"></canvas>
+
   <!-- Navigation -->
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
     <div class="nav-inner max-w-[1400px] mx-auto px-6 lg:px-12 py-5 flex items-center justify-between">
@@ -128,10 +131,10 @@
           <h3 class="card-title">Web & Mobile App Development</h3>
         </div>
 
-        <!-- Card 05 -->
+        <!-- Card 04 -->
         <div class="service-card">
           <div class="card-header">
-            <span class="card-number">05</span>
+            <span class="card-number">04</span>
             <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M4.5 12.75l7.5-7.5 7.5 7.5m-15 6l7.5-7.5 7.5 7.5"/>
             </svg>
@@ -139,10 +142,10 @@
           <h3 class="card-title">World-class Investor Relations</h3>
         </div>
 
-        <!-- Card 0U -->
+        <!-- Card 05 -->
         <div class="service-card">
           <div class="card-header">
-            <span class="card-number">0U</span>
+            <span class="card-number">05</span>
             <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25z"/>
             </svg>
@@ -150,10 +153,10 @@
           <h3 class="card-title">AI Agent Development</h3>
         </div>
 
-        <!-- Card 0) -->
+        <!-- Card 06 -->
         <div class="service-card">
           <div class="card-header">
-            <span class="card-number">0)</span>
+            <span class="card-number">06</span>
             <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
             </svg>
@@ -222,11 +225,13 @@
         <div class="flex items-center gap-4">
           <img src="/assets/esvelo2.png" alt="Esvelo" class="h-5">
         </div>
-        <span class="text-white/40 text-sm">© 2024 Esvelo. All rights reserved.</span>
+        <span class="text-white/40 text-sm">© 2026 Esvelo. All rights reserved.</span>
       </div>
     </div>
   </footer>
 
   <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/ascii-background.js"></script>
+  <script type="module" src="/src/text-scramble.js"></script>
 </body>
 </html>
