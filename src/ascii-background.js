@@ -220,7 +220,30 @@ class ASCIIBackground {
           snoise(vec3(cellCenter * uResolution * turbScale + 100.0, turbTime + 50.0)) * 60.0
         );
 
-        vec2 distortedPos = cellCenter * uResolution + turb;
+        // === CURSOR STIRRING - mouse displaces the noise field ===
+        vec2 mousePos = uMouse * uResolution;
+        vec2 toMouse = fragCoord - mousePos;
+        float mouseDist = length(toMouse);
+
+        // Circular stirring effect - swirls around cursor
+        float stirRadius = 450.0;  // Radius of influence
+        float stirStrength = exp(-mouseDist * mouseDist / (stirRadius * stirRadius * 0.5)) * uIntensity;
+
+        // Calculate swirl angle based on distance and time
+        float swirlAngle = atan(toMouse.y, toMouse.x);
+        float swirlSpeed = 0.3 + (1.0 - stirStrength) * 0.5;  // Slower near center
+        float swirlOffset = sin(mouseDist * 0.02 - uTime * swirlSpeed) * stirStrength * 80.0;
+
+        // Tangential displacement (perpendicular to direction from mouse)
+        vec2 tangent = vec2(-toMouse.y, toMouse.x) / max(mouseDist, 1.0);
+        vec2 mouseTurb = tangent * swirlOffset;
+
+        // Add radial push/pull waves emanating from cursor
+        float radialWave = sin(mouseDist * 0.015 - uTime * 0.8) * stirStrength * 40.0;
+        vec2 radialDir = toMouse / max(mouseDist, 1.0);
+        mouseTurb += radialDir * radialWave;
+
+        vec2 distortedPos = cellCenter * uResolution + turb + mouseTurb;
 
         // Generate blob pattern using multiple noise layers
         float blobScale = 0.0006;
@@ -331,18 +354,33 @@ class ASCIIBackground {
         // Calculate brightness for character selection
         float brightness = blobMask * (0.3 + visibility * 0.5);
 
-        // Select ASCII character based on brightness
+        // === CHARACTER VARIETY - adds depth with multiple symbol layers ===
+        // High-frequency noise for local variation within similar brightness regions
+        float charVariety1 = snoise(vec3(distortedPos * 0.003, uTime * 0.1)) * 0.5 + 0.5;
+        float charVariety2 = snoise(vec3(distortedPos * 0.005 + 200.0, 0.0)) * 0.5 + 0.5;
+        float charVariety3 = snoise(vec3(distortedPos * 0.008 + 400.0, uTime * 0.05)) * 0.5 + 0.5;
+
+        // Mix variety into brightness for character selection - creates depth
+        float charBrightness = brightness + (charVariety1 - 0.5) * 0.18 + (charVariety2 - 0.5) * 0.12 + (charVariety3 - 0.5) * 0.08;
+        charBrightness = clamp(charBrightness, 0.0, 1.0);
+
+        // Select ASCII character based on varied brightness
         // Characters encoded as 25-bit patterns (5x5 grid)
+        // More characters for smoother transitions and depth
         int charCode = 4096; // . (dot)
 
-        if (brightness > 0.08) charCode = 4096;      // .
-        if (brightness > 0.15) charCode = 65600;     // :
-        if (brightness > 0.22) charCode = 163153;    // *
-        if (brightness > 0.30) charCode = 15255086;  // o
-        if (brightness > 0.38) charCode = 13121101;  // &
-        if (brightness > 0.46) charCode = 15252014;  // 8
-        if (brightness > 0.54) charCode = 13195790;  // @
-        if (brightness > 0.62) charCode = 11512810;  // #
+        if (charBrightness > 0.05) charCode = 4096;      // .
+        if (charBrightness > 0.10) charCode = 65600;     // :
+        if (charBrightness > 0.16) charCode = 2228224;   // -
+        if (charBrightness > 0.22) charCode = 163153;    // *
+        if (charBrightness > 0.28) charCode = 4329604;   // +
+        if (charBrightness > 0.34) charCode = 15255086;  // o
+        if (charBrightness > 0.40) charCode = 13121101;  // &
+        if (charBrightness > 0.46) charCode = 15252014;  // 8
+        if (charBrightness > 0.52) charCode = 32505926;  // %
+        if (charBrightness > 0.58) charCode = 13195790;  // @
+        if (charBrightness > 0.64) charCode = 11512810;  // #
+        if (charBrightness > 0.72) charCode = 33080895;  // M
 
         // Render character
         vec2 charUv = mod(fragCoord / (uCellSize * 0.5), 2.0) - vec2(1.0);
@@ -371,9 +409,20 @@ class ASCIIBackground {
 
         vec3 color = tint * char * brightness;
 
-        // Add colored glow
-        float glow = char * brightness * 0.2;
-        color += tint * glow * 0.5;
+        // === HEIGHT-BASED GLOW - higher symbols glow more ===
+        float heightFactor = fragCoord.y / uResolution.y;  // 0 at bottom, 1 at top
+        float heightGlow = pow(heightFactor, 1.5) * 2.5;   // Exponential increase toward top
+
+        // Add colored glow with height enhancement
+        float glow = char * brightness * 0.2 * (1.0 + heightGlow);
+        color += tint * glow * 0.6;
+
+        // Additional bloom effect for top characters
+        if (heightFactor > 0.4) {
+          float bloomStrength = pow((heightFactor - 0.4) / 0.6, 1.2);  // Smooth ramp from 40% height
+          vec3 bloomColor = mix(tint, white, 0.4);
+          color += bloomColor * char * brightness * bloomStrength * 0.35;
+        }
 
         // === SUBTLE LIGHT RAYS - simple per-character glow ===
         // No neighbor sampling - just add subtle rays from current character
