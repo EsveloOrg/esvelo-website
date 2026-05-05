@@ -29,7 +29,7 @@ class ASCIIBackground {
     // Cumulative intensity - builds up with movement
     this.intensity = 0;           // Current intensity (0-1)
     this.targetIntensity = 0;     // Target to interpolate towards
-    this.maxIntensity = 1.0;      // Maximum intensity when fully revealed
+    this.maxIntensity = 0.65;     // Maximum intensity when fully revealed
 
     // Scroll tracking
     this.lastScrollY = window.scrollY;
@@ -411,17 +411,17 @@ class ASCIIBackground {
 
         // === HEIGHT-BASED GLOW - higher symbols glow more ===
         float heightFactor = fragCoord.y / uResolution.y;  // 0 at bottom, 1 at top
-        float heightGlow = pow(heightFactor, 1.5) * 2.5;   // Exponential increase toward top
+        float heightGlow = pow(heightFactor, 1.5) * 1.2;   // Gentler increase toward top
 
         // Add colored glow with height enhancement
-        float glow = char * brightness * 0.2 * (1.0 + heightGlow);
-        color += tint * glow * 0.6;
+        float glow = char * brightness * 0.12 * (1.0 + heightGlow);
+        color += tint * glow * 0.4;
 
         // Additional bloom effect for top characters
         if (heightFactor > 0.4) {
           float bloomStrength = pow((heightFactor - 0.4) / 0.6, 1.2);  // Smooth ramp from 40% height
           vec3 bloomColor = mix(tint, white, 0.4);
-          color += bloomColor * char * brightness * bloomStrength * 0.35;
+          color += bloomColor * char * brightness * bloomStrength * 0.18;
         }
 
         // === SUBTLE LIGHT RAYS - simple per-character glow ===
@@ -432,7 +432,7 @@ class ASCIIBackground {
 
           // Soft white/colored ray glow
           vec3 rayColor = mix(tint, white, 0.6);
-          color += rayColor * rays * visibility * 0.8;
+          color += rayColor * rays * visibility * 0.4;
         }
 
         // Apply visibility (already includes global + reveal mask)
@@ -513,7 +513,7 @@ class ASCIIBackground {
   }
 
   resize() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1);
     this.canvas.width = window.innerWidth * dpr;
     this.canvas.height = window.innerHeight * dpr;
     this.canvas.style.width = window.innerWidth + 'px';
