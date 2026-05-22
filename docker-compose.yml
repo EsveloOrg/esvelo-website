@@ -1,0 +1,29 @@
+services:
+  web:
+    build: .
+    container_name: esvelo
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    expose:
+      - "80"
+    networks:
+      - traefik-proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.esvelo.rule=Host(`esvelo.com`) || Host(`www.esvelo.com`)"
+      - "traefik.http.routers.esvelo.entrypoints=websecure"
+      - "traefik.http.routers.esvelo.tls=true"
+      - "traefik.http.routers.esvelo.tls.certresolver=letsencrypt"
+      - "traefik.http.services.esvelo.loadbalancer.server.port=80"
+
+networks:
+  traefik-proxy:
+    external: true
